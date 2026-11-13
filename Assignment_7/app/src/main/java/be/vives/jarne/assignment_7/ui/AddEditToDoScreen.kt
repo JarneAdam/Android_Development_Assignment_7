@@ -31,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import be.vives.jarne.assignment_7.models.ToDo
 import be.vives.jarne.assignment_7.models.User
 
 /**
@@ -42,7 +41,7 @@ fun AddEditToDoScreen(
     modifier: Modifier = Modifier,
     viewModel: AddEditToDoViewModel,
     onNavigateBack: () -> Unit = {},
-    onSave: (ToDo) -> Unit = {},
+    onSave: () -> Unit = {},
     onCancel: () -> Unit = {},
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -79,7 +78,8 @@ fun AddEditToDoScreen(
             acceptanceDone = uiState.acceptanceDone,
             onAcceptanceDoneChange = viewModel::onAcceptanceDoneChange,
             onSave = {
-                onSave(viewModel.getUpdatedToDo())
+                viewModel.save()
+                onSave()
             },
             onCancel = onCancel,
             onNavigateBack = onNavigateBack,

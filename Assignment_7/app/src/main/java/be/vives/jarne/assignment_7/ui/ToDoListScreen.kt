@@ -30,7 +30,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import be.vives.jarne.assignment_7.models.MockupToDo
 import be.vives.jarne.assignment_7.models.ToDo
 import be.vives.jarne.assignment_7.ui.theme.Assignment_7Theme
 
@@ -74,7 +73,7 @@ fun ToDoListScreen(
 @Composable
 fun ToDoListContent(
     modifier: Modifier = Modifier,
-    toDos: List<ToDo> = MockupToDo.getToDos(),
+    toDos: List<ToDo> = emptyList(),
     onToDoClick: (ToDo) -> Unit = { _ -> },
 ) {
     LazyColumn(

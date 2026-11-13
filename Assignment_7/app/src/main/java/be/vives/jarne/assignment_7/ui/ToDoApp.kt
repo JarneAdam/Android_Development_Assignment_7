@@ -11,6 +11,8 @@ import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDe
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import be.vives.jarne.assignment_7.data.AppDatabase
+import be.vives.jarne.assignment_7.data.ToDoRepository
 
 private data object ToDoListRoute
 private data class ToDoDetailRoute(val id: Int)
@@ -19,6 +21,7 @@ private data class AddEditToDoRoute(val id: Int? = null)
 @Composable
 fun ToDoApp(modifier: Modifier = Modifier) {
     val context = LocalContext.current
+    val repository = remember { ToDoRepository(AppDatabase.getInstance(context).toDoDao()) }
     val backStack = remember { mutableStateListOf<Any>(ToDoListRoute) }
 
     NavDisplay(
@@ -34,6 +37,7 @@ fun ToDoApp(modifier: Modifier = Modifier) {
             entry<ToDoListRoute> {
                 ToDoListScreen(
                     modifier = modifier,
+                    viewModel = viewModel(factory = ToDoListViewModel.Factory(repository)),
                     onToDoClick = { toDo ->
                         backStack.add(ToDoDetailRoute(toDo.number))
                     },
@@ -46,7 +50,7 @@ fun ToDoApp(modifier: Modifier = Modifier) {
 
             entry<ToDoDetailRoute> { route ->
                 val detailViewModel: ToDetailViewModel = viewModel(
-                    factory = ToDetailViewModel.Factory(route.id),
+                    factory = ToDetailViewModel.Factory(route.id, repository),
                 )
                 ToDetailScreen(
                     modifier = modifier,
@@ -60,7 +64,7 @@ fun ToDoApp(modifier: Modifier = Modifier) {
 
             entry<AddEditToDoRoute> { route ->
                 val addEditViewModel: AddEditToDoViewModel = viewModel(
-                    factory = AddEditToDoViewModel.Factory(route.id),
+                    factory = AddEditToDoViewModel.Factory(route.id, repository),
                 )
                 AddEditToDoScreen(
                     modifier = modifier,

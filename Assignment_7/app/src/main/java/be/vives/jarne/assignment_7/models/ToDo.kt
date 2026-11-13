@@ -1,19 +1,44 @@
 package be.vives.jarne.assignment_7.models
 
-import java.util.Date
+import androidx.room3.Entity
+import androidx.room3.ForeignKey
+import androidx.room3.Index
+import androidx.room3.PrimaryKey
 
 enum class Status {
     NEW, ASSIGNED, FINISHED
 }
 
+@Entity(
+    tableName = "todos",
+    foreignKeys = [
+        ForeignKey(
+            entity = User::class,
+            parentColumns = ["id"],
+            childColumns = ["createdByUserId"],
+            onDelete = ForeignKey.RESTRICT,
+        ),
+        ForeignKey(
+            entity = User::class,
+            parentColumns = ["id"],
+            childColumns = ["assignedToUserId"],
+            onDelete = ForeignKey.SET_NULL,
+        ),
+    ],
+    indices = [
+        Index("createdByUserId"),
+        Index("assignedToUserId"),
+    ],
+)
 data class ToDo(
+    @PrimaryKey
     var number: Int,
     var title: String,
     var description: String,
-    var createdByUser: User,
-    var createOnDate: Date,
-    var assignedToUser: User?,
-    var finishedOnDate: Date?,
+    var createdByUserId: Int,
+    var createOnDate: Long,
+    var assignedToUserId: Int?,
+    var finishedOnDate: Long?,
     var timeEstimated: Int,
     var analysisDone: Boolean = false,
     var developmentDone: Boolean = false,
@@ -22,9 +47,9 @@ data class ToDo(
 ) {
     val status: Status
         get() {
-            return if ((assignedToUser != null) && (finishedOnDate != null)) {
+            return if ((assignedToUserId != null) && (finishedOnDate != null)) {
                 Status.FINISHED
-            } else if (assignedToUser != null) {
+            } else if (assignedToUserId != null) {
                 Status.ASSIGNED
             } else {
                 Status.NEW

@@ -1,7 +1,5 @@
 package be.vives.jarne.assignment_7.models
 
-import java.util.Date
-
 object MockupToDo {
     fun getUsers(): List<User> {
         return listOf(
@@ -13,62 +11,66 @@ object MockupToDo {
     }
 
     fun getToDos(): List<ToDo> {
-        val users = getUsers()
         return listOf(
             ToDo(
-                1,
-                "Finish detail ToDo",
-                "Add extra fields like assigned user, time estimated, ...to the ToDo detail screen",
-                users[1],
-                Date(),
-                users[0],
-                Date(),
-                20,
-                false, false, false, false
+                number = 1,
+                title = "Finish detail ToDo",
+                description = "Add extra fields like assigned user, time estimated, ...to the ToDo detail screen",
+                createdByUserId = 2,
+                createOnDate = System.currentTimeMillis(),
+                assignedToUserId = 1,
+                finishedOnDate = System.currentTimeMillis(),
+                timeEstimated = 20,
             ),
             ToDo(
-                2,
-                "Implement Models",
-                "Create User and ToDo data classes",
-                users[0],
-                Date(),
-                users[1],
-                null,
-                2,
-                true, false, false, false
+                number = 2,
+                title = "Implement Models",
+                description = "Create User and ToDo data classes",
+                createdByUserId = 1,
+                createOnDate = System.currentTimeMillis(),
+                assignedToUserId = 2,
+                finishedOnDate = null,
+                timeEstimated = 2,
+                analysisDone = true,
             ),
             ToDo(
-                3,
-                "Create Mock Data",
-                "Generate a list of users and todos for testing",
-                users[1],
-                Date(),
-                users[1],
-                null,
-                1,
-                true, true, false, false
+                number = 3,
+                title = "Create Mock Data",
+                description = "Generate a list of users and todos for testing",
+                createdByUserId = 2,
+                createOnDate = System.currentTimeMillis(),
+                assignedToUserId = 2,
+                finishedOnDate = null,
+                timeEstimated = 1,
+                analysisDone = true,
+                developmentDone = true,
             ),
             ToDo(
-                4,
-                "Design UI",
-                "Create Jetpack Compose layout for ToDo details",
-                users[2],
-                Date(),
-                users[0],
-                null,
-                8,
-                true, true, true, false
+                number = 4,
+                title = "Design UI",
+                description = "Create Jetpack Compose layout for ToDo details",
+                createdByUserId = 3,
+                createOnDate = System.currentTimeMillis(),
+                assignedToUserId = 1,
+                finishedOnDate = null,
+                timeEstimated = 8,
+                analysisDone = true,
+                developmentDone = true,
+                reviewAndTestingDone = true,
             ),
             ToDo(
-                5,
-                "Testing and QA",
-                "Ensure everything works as expected",
-                users[0],
-                Date(),
-                users[2],
-                Date(),
-                5,
-                true, true, true, true
+                number = 5,
+                title = "Testing and QA",
+                description = "Ensure everything works as expected",
+                createdByUserId = 1,
+                createOnDate = System.currentTimeMillis(),
+                assignedToUserId = 3,
+                finishedOnDate = System.currentTimeMillis(),
+                timeEstimated = 5,
+                analysisDone = true,
+                developmentDone = true,
+                reviewAndTestingDone = true,
+                acceptanceDone = true,
             )
         )
     }

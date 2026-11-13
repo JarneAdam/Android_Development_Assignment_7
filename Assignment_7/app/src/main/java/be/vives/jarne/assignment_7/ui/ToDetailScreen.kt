@@ -42,6 +42,7 @@ fun ToDetailScreen(
     uiState.toDo?.let { currentToDo ->
         ToDetailContent(
             toDo = currentToDo,
+            users = uiState.users,
             modifier = modifier,
             onNavigateBack = onNavigateBack,
             onNavigateToEdit = onNavigateToEdit,
@@ -52,6 +53,7 @@ fun ToDetailScreen(
 @Composable
 fun ToDetailContent(
     toDo: ToDo,
+    users: List<be.vives.jarne.assignment_7.models.User> = emptyList(),
     modifier: Modifier = Modifier,
     onNavigateBack: () -> Unit = {},
     onNavigateToEdit: () -> Unit = {},
@@ -114,8 +116,9 @@ fun ToDetailContent(
             modifier = Modifier.padding(bottom = 16.dp),
         )
 
-        val assignedUserText = if (toDo.assignedToUser != null) {
-            "Assigned to ${Utility.getUserDisplayName(toDo.assignedToUser)}"
+        val assignedUser = users.firstOrNull { it.id == toDo.assignedToUserId }
+        val assignedUserText = if (assignedUser != null) {
+            "Assigned to ${Utility.getUserDisplayName(assignedUser)}"
         } else {
             Utility.getUserDisplayName(null, "Not assigned yet")
         }
